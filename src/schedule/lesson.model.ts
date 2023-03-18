@@ -35,8 +35,8 @@ interface LessonI {
 }
 
 export enum LessonType {
-  STUDENT = 'student',
-  TEACHER = 'teacher',
+  PR = 'pr',
+  TEOR = 'teor',
 }
 
 @Table
@@ -75,11 +75,12 @@ export class Lesson extends Model<Lesson> {
   })
   type: LessonType;
 
-  @HasOne(() => User)
-  teacher: User;
-  public getTeacher: HasOneGetAssociationMixin<User>;
-  public setTeacher: HasOneSetAssociationMixin<User, number>;
-  public createTeacher: HasOneCreateAssociationMixin<User>;
+  @ForeignKey(() => User)
+  @Column({ type: DataType.INTEGER })
+  userId: number;
+
+  @BelongsTo(() => User, { foreignKey: 'userId' })
+  user: User;
 
   @HasOne(() => User)
   room: Room;

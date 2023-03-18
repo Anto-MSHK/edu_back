@@ -23,7 +23,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { BelongsTo, ForeignKey } from 'sequelize-typescript';
-import { Group } from 'src/group/group.model';
+import { Group } from 'src/schedule/group.model';
 import { Lesson } from 'src/schedule/lesson.model';
 
 interface UserI {
@@ -111,4 +111,13 @@ export class User extends Model<User, UserI> {
     defaultValue: Sequelize.fn('now'),
   })
   updatedAt: string;
+
+  @HasMany(() => Lesson)
+  lessons: Lesson[];
+  public getlessons!: HasManyGetAssociationsMixin<Lesson>;
+  public addlesson!: HasManyAddAssociationMixin<Lesson, number>;
+  public setlessons!: HasManySetAssociationsMixin<Lesson, number>;
+  public removelesson!: HasManyRemoveAssociationMixin<Lesson, number>;
+  public createlesson!: HasManyCreateAssociationMixin<Lesson>;
+  public countlessons!: HasManyCountAssociationsMixin;
 }

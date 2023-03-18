@@ -11,7 +11,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
-import { Group } from 'src/group/group.model';
+import { Group } from 'src/schedule/group.model';
 import { Lesson } from './lesson.model';
 
 interface SubjectI {

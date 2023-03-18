@@ -28,7 +28,7 @@ import {
 import { User } from 'src/user/user.model';
 import { Room } from './room.model';
 import { Lesson } from './lesson.model';
-import { Group } from 'src/group/group.model';
+import { Group } from 'src/schedule/group.model';
 
 interface DayI {
   firstName: string;

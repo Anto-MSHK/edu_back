@@ -6,13 +6,17 @@ import { Sequelize } from 'sequelize';
 
 @Injectable()
 export class AppService {
-  constructor(@Inject('db_connect') private sequelize: Sequelize) {}
+  constructor(@InjectConnection('db_connect') private sequelize: Sequelize) {}
 
   async generateMockData(): Promise<string> {
-    const content = readFileSync(
+    let content = readFileSync(
       join(__dirname, '../mock_data/users.sql'),
       'utf8',
     );
+    await this.sequelize.query(content);
+    content = readFileSync(join(__dirname, '../mock_data/groups.sql'), 'utf8');
+    await this.sequelize.query(content);
+    content = readFileSync(join(__dirname, '../mock_data/lessons.sql'), 'utf8');
     await this.sequelize.query(content);
     return 'Данные успешно сгенерированны!';
   }

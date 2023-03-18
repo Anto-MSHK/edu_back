@@ -4,13 +4,14 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { GroupModule } from './group/group.module';
 import { User } from './user/user.model';
-import { Group } from './group/group.model';
+import { Group } from './schedule/group.model';
 import { Day } from './schedule/day.model';
 import { Lesson } from './schedule/lesson.model';
 import { Subject } from './schedule/subject.model';
 import { Room } from './schedule/room.model';
 import { SequelizeModule, getConnectionToken } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize';
+import { ScheduleModule } from './schedule/schedule.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -19,6 +20,7 @@ dotenv.config();
   imports: [
     UserModule,
     GroupModule,
+    ScheduleModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',

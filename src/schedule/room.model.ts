@@ -11,6 +11,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Lesson } from './lesson.model';
 
 interface RoomI {
   firstName: string;
@@ -40,6 +41,13 @@ export class Room extends Model<Room> {
     allowNull: false,
   })
   name: string;
+
+  @ForeignKey(() => Lesson)
+  @Column({ type: DataType.INTEGER })
+  lessonId: number;
+
+  @BelongsTo(() => Lesson, { foreignKey: 'lessonId' })
+  lesson: Lesson;
 
   @Column({
     type: DataType.DATE,
