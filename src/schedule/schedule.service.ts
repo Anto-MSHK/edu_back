@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Group } from 'src/schedule/group.model';
+import { Group } from 'src/group/group.model';
+import { User } from 'src/user/user.model';
 
 @Injectable()
 export class ScheduleService {

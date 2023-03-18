@@ -19,6 +19,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  BeforeFind,
 } from 'sequelize-typescript';
 import { BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Day } from 'src/schedule/day.model';
@@ -26,8 +27,7 @@ import { User } from 'src/user/user.model';
 
 import { Sequelize } from 'sequelize';
 interface GroupI {
-  firstName: string;
-  lastName: string;
+  name: string;
 }
 
 export enum UserType {
@@ -35,7 +35,11 @@ export enum UserType {
   TEACHER = 'teacher',
 }
 
-@Table
+@Table({
+  defaultScope: {
+    include: [{ model: Day, as: 'days' }],
+  },
+})
 export class Group extends Model<Group, GroupI> {
   @ApiProperty({
     description: 'id события',

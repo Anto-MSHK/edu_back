@@ -23,7 +23,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { BelongsTo, ForeignKey } from 'sequelize-typescript';
-import { Group } from 'src/schedule/group.model';
+import { Group } from 'src/group/group.model';
 import { Lesson } from 'src/schedule/lesson.model';
 
 interface UserI {
@@ -36,7 +36,11 @@ export enum UserType {
   TEACHER = 'teacher',
 }
 
-@Table
+@Table({
+  defaultScope: {
+    include: [{ model: Lesson, as: 'lessons' }],
+  },
+})
 export class User extends Model<User, UserI> {
   @ApiProperty({
     description: 'id пользоавателя',

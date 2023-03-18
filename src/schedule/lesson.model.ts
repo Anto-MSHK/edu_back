@@ -10,6 +10,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  BeforeFind,
 } from 'sequelize-typescript';
 import { Sequelize } from 'sequelize';
 import { Subject } from './subject.model';
@@ -28,6 +29,7 @@ import {
 import { User } from 'src/user/user.model';
 import { Room } from './room.model';
 import { Day } from './day.model';
+import { BeforeInsert } from 'typeorm';
 
 interface LessonI {
   firstName: string;
@@ -39,7 +41,14 @@ export enum LessonType {
   TEOR = 'teor',
 }
 
-@Table
+@Table({
+  defaultScope: {
+    include: [
+      { model: Room, as: 'room' },
+      { model: Subject, as: 'subject' },
+    ],
+  },
+})
 export class Lesson extends Model<Lesson> {
   @PrimaryKey
   @AutoIncrement
@@ -82,7 +91,7 @@ export class Lesson extends Model<Lesson> {
   @BelongsTo(() => User, { foreignKey: 'userId' })
   user: User;
 
-  @HasOne(() => User)
+  @HasOne(() => Room)
   room: Room;
   public getRoom: HasOneGetAssociationMixin<Room>;
   public setRoom: HasOneSetAssociationMixin<Room, number>;

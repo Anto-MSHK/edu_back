@@ -1,9 +1,18 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Group } from 'src/group/group.model';
+import { getModelToken } from '@nestjs/sequelize';
+import { User } from './user.model';
 @Module({
   controllers: [UserController],
-  providers: [UserService]
+  providers: [
+    UserService,
+    {
+      provide: getModelToken(User),
+      useValue: User,
+    },
+  ],
 })
 export class UserModule {}

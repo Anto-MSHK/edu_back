@@ -10,6 +10,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  BeforeFind,
 } from 'sequelize-typescript';
 import { Sequelize } from 'sequelize';
 import { Subject } from './subject.model';
@@ -28,7 +29,7 @@ import {
 import { User } from 'src/user/user.model';
 import { Room } from './room.model';
 import { Lesson } from './lesson.model';
-import { Group } from 'src/schedule/group.model';
+import { Group } from 'src/group/group.model';
 
 interface DayI {
   firstName: string;
@@ -40,7 +41,11 @@ export enum LessonType {
   TEACHER = 'teacher',
 }
 
-@Table
+@Table({
+  defaultScope: {
+    include: [{ model: Lesson, as: 'lessons' }],
+  },
+})
 export class Day extends Model<Day> {
   @PrimaryKey
   @AutoIncrement
@@ -86,4 +91,6 @@ export class Day extends Model<Day> {
     defaultValue: Sequelize.fn('now'),
   })
   updatedAt: string;
+
+
 }
