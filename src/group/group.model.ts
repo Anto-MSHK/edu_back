@@ -24,6 +24,7 @@ import { BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Day } from 'src/schedule/day.model';
 import { User } from 'src/user/user.model';
 
+import { Sequelize } from 'sequelize';
 interface GroupI {
   firstName: string;
   lastName: string;
@@ -74,4 +75,16 @@ export class Group extends Model<Group, GroupI> {
   public removeDay!: HasManyRemoveAssociationMixin<Day, number>;
   public createDay!: HasManyCreateAssociationMixin<Day>;
   public countDays!: HasManyCountAssociationsMixin;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  createdAt: string;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  updatedAt: string;
 }

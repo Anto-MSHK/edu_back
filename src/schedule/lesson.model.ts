@@ -11,6 +11,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Sequelize } from 'sequelize';
 import { Subject } from './subject.model';
 
 import {
@@ -109,4 +110,16 @@ export class Lesson extends Model<Lesson> {
 
   @BelongsTo(() => Day, { foreignKey: 'dayId' })
   day: Day;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  createdAt: string;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  updatedAt: string;
 }

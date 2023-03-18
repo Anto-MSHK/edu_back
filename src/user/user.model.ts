@@ -9,6 +9,8 @@ import {
   HasOneCreateAssociationMixin,
   HasOneGetAssociationMixin,
   HasOneSetAssociationMixin,
+  DataTypes,
+  Sequelize,
 } from 'sequelize';
 import {
   AutoIncrement,
@@ -22,6 +24,7 @@ import {
 } from 'sequelize-typescript';
 import { BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Group } from 'src/group/group.model';
+import { Lesson } from 'src/schedule/lesson.model';
 
 interface UserI {
   firstName: string;
@@ -52,7 +55,6 @@ export class User extends Model<User, UserI> {
 
   @ApiProperty({
     description: 'фамилия пользователя',
-    example: 'Выставка картин',
   })
   @Column({ type: DataType.STRING })
   lastName: string;
@@ -90,4 +92,23 @@ export class User extends Model<User, UserI> {
 
   @BelongsTo(() => Group, { foreignKey: 'groupId' })
   group: Group;
+
+  @ForeignKey(() => Lesson)
+  @Column({ type: DataType.INTEGER })
+  lessonId: number;
+
+  @BelongsTo(() => Lesson, { foreignKey: 'lessonId' })
+  lesson: Lesson;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  createdAt: string;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  updatedAt: string;
 }

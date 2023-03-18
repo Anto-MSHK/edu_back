@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Sequelize } from 'sequelize';
 import {
   AutoIncrement,
   BelongsTo,
@@ -39,4 +40,16 @@ export class Room extends Model<Room> {
     allowNull: false,
   })
   name: string;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  createdAt: string;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  updatedAt: string;
 }

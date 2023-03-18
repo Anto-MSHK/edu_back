@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Sequelize } from 'sequelize';
 import {
   AutoIncrement,
   BelongsTo,
@@ -10,6 +11,8 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Group } from 'src/group/group.model';
+import { Lesson } from './lesson.model';
 
 interface SubjectI {
   firstName: string;
@@ -39,4 +42,23 @@ export class Subject extends Model<Subject> {
     allowNull: false,
   })
   name: string;
+
+  @ForeignKey(() => Lesson)
+  @Column({ type: DataType.INTEGER })
+  lessonId: number;
+
+  @BelongsTo(() => Lesson, { foreignKey: 'lessonId' })
+  lesson: Lesson;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  createdAt: string;
+
+  @Column({
+    type: DataType.DATE,
+    defaultValue: Sequelize.fn('now'),
+  })
+  updatedAt: string;
 }

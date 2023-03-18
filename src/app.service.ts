@@ -1,8 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/sequelize';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { Sequelize } from 'sequelize';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  constructor(@Inject('db_connect') private sequelize: Sequelize) {}
+
+  async generateMockData(): Promise<string> {
+    const content = readFileSync(
+      join(__dirname, '../mock_data/users.sql'),
+      'utf8',
+    );
+    await this.sequelize.query(content);
+    return 'Данные успешно сгенерированны!';
   }
 }
